@@ -33,14 +33,14 @@ class Game:
 		currentAV = actionValues
 
 		currentBoard = np.array([
-			 currentBoard[2], currentBoard[1], currentBoard[0]
-			currentBoard[5], currentBoard[4], currentBoard[3]
+			 currentBoard[2], currentBoard[1], currentBoard[0],
+			currentBoard[5], currentBoard[4], currentBoard[3],
 			currentBoard[8], currentBoard[7], currentBoard[6]
 			])
 
 		currentAV = np.array([
-			currentAV[2], currentAV[1], currentAV[0]
-			currentAV[5], currentAV[4], currentAV[3]
+			currentAV[2], currentAV[1], currentAV[0],
+			currentAV[5], currentAV[4], currentAV[3],
 			currentAV[8], currentAV[7], currentAV[6]
 					])
 
