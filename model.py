@@ -33,7 +33,8 @@ class Gen_Model():
 		return self.model.fit(states, targets, epochs=epochs, verbose=verbose, validation_split = validation_split, batch_size = batch_size)
 
 	def write(self, game, version):
-		self.model.save(run_folder + 'models/version' + "{0:0>4}".format(version) + '.h5')
+		# self.model.save(run_folder + 'models/version' + "{0:0>4}".format(version) + '.h5')
+		self.model.save('hi.h5')
 
 	def read(self, game, run_number, version):
 		return load_model( run_archive_folder + game + '/run' + str(run_number).zfill(4) + "/models/version" + "{0:0>4}".format(version) + '.h5', custom_objects={'softmax_cross_entropy_with_logits': softmax_cross_entropy_with_logits})
@@ -115,7 +116,7 @@ class Residual_CNN(Gen_Model):
 
 	def residual_layer(self, input_block, filters, kernel_size):
 
-		x = self.conv_layer(input_block, filters, kernel_size)
+		x = self.conv_layer(input_block, filters, kernel_size)	
 
 		x = Conv2D(
 		filters = filters
