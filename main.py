@@ -24,25 +24,27 @@ import initialise
 import pickle
 
 
-lg.logger_main.info('=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*')
-lg.logger_main.info('=*=*=*=*=*=.      NEW LOG      =*=*=*=*=*')
-lg.logger_main.info('=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*')
+# lg.logger_main.info('=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*')
+# lg.logger_main.info('=*=*=*=*=*=.      NEW LOG      =*=*=*=*=*')
+# lg.logger_main.info('=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*')
 
 env = Game()
 
-# If loading an existing neural network, copy the config file to root
-if initialise.INITIAL_RUN_NUMBER != None:
-    copyfile(run_archive_folder  + env.name + '/run' + str(initialise.INITIAL_RUN_NUMBER).zfill(4) + '/config.py', './config.py')
+# # If loading an existing neural network, copy the config file to root
+# if initialise.INITIAL_RUN_NUMBER != None:
+#     copyfile(run_archive_folder  + env.name + '/run' + str(initialise.INITIAL_RUN_NUMBER).zfill(4) + '/config.py', './config.py')
 
 import config
 
-######## LOAD MEMORIES IF NECESSARY ########
+memory = Memory(config.MEMORY_SIZE)
 
-if initialise.INITIAL_MEMORY_VERSION == None:
-    memory = Memory(config.MEMORY_SIZE)
-else:
-    print('LOADING MEMORY VERSION ' + str(initialise.INITIAL_MEMORY_VERSION) + '...')
-    memory = pickle.load( open( run_archive_folder + env.name + '/run' + str(initialise.INITIAL_RUN_NUMBER).zfill(4) + "/memory/memory" + str(initialise.INITIAL_MEMORY_VERSION).zfill(4) + ".p",   "rb" ) )
+# ######## LOAD MEMORIES IF NECESSARY ########
+
+# if initialise.INITIAL_MEMORY_VERSION == None:
+#     memory = Memory(config.MEMORY_SIZE)
+# else:
+#     print('LOADING MEMORY VERSION ' + str(initialise.INITIAL_MEMORY_VERSION) + '...')
+#     memory = pickle.load( open( run_archive_folder + env.name + '/run' + str(initialise.INITIAL_RUN_NUMBER).zfill(4) + "/memory/memory" + str(initialise.INITIAL_MEMORY_VERSION).zfill(4) + ".p",   "rb" ) )
 
 ######## LOAD MODEL IF NECESSARY ########
 
