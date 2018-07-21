@@ -8,9 +8,6 @@ from shutil import copyfile
 import random
 from importlib import reload
 
-
-from keras.utils import plot_model
-
 from game import Game, GameState
 from agent import Agent
 from memory import Memory
@@ -31,20 +28,19 @@ import pickle
 env = Game()
 
 # # If loading an existing neural network, copy the config file to root
-# if initialise.INITIAL_RUN_NUMBER != None:
-#     copyfile(run_archive_folder  + env.name + '/run' + str(initialise.INITIAL_RUN_NUMBER).zfill(4) + '/config.py', './config.py')
+if initialise.INITIAL_RUN_NUMBER != None:
+    copyfile(run_archive_folder  + env.name + '/run' + str(initialise.INITIAL_RUN_NUMBER).zfill(4) + '/config.py', './config.py')
 
 import config
 
-memory = Memory(config.MEMORY_SIZE)
 
 # ######## LOAD MEMORIES IF NECESSARY ########
 
-# if initialise.INITIAL_MEMORY_VERSION == None:
-#     memory = Memory(config.MEMORY_SIZE)
-# else:
-#     print('LOADING MEMORY VERSION ' + str(initialise.INITIAL_MEMORY_VERSION) + '...')
-#     memory = pickle.load( open( run_archive_folder + env.name + '/run' + str(initialise.INITIAL_RUN_NUMBER).zfill(4) + "/memory/memory" + str(initialise.INITIAL_MEMORY_VERSION).zfill(4) + ".p",   "rb" ) )
+if initialise.INITIAL_MEMORY_VERSION == None:
+    memory = Memory(config.MEMORY_SIZE)
+else:
+    print('LOADING MEMORY VERSION ' + str(initialise.INITIAL_MEMORY_VERSION) + '...')
+    memory = pickle.load( open( run_archive_folder + env.name + '/run' + str(initialise.INITIAL_RUN_NUMBER).zfill(4) + "/memory/memory" + str(initialise.INITIAL_MEMORY_VERSION).zfill(4) + ".p",   "rb" ) )
 
 ######## LOAD MODEL IF NECESSARY ########
 
