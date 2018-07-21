@@ -108,10 +108,11 @@ class Gen_Model():
 
 
 class Residual_CNN(Gen_Model):
-	def __init__(self, reg_const, learning_rate, input_dim,  output_dim, hidden_layers):
+	def __init__(self, reg_const, learning_rate, input_dim,  output_dim, hidden_layers, version_number):
 		Gen_Model.__init__(self, reg_const, learning_rate, input_dim, output_dim)
 		self.hidden_layers = hidden_layers
 		self.num_layers = len(hidden_layers)
+		self.version_number = version_number
 		self.model = self._build_model()
 
 	def residual_layer(self, input_block, filters, kernel_size):
@@ -185,7 +186,7 @@ class Residual_CNN(Gen_Model):
 			, use_bias=False
 			, activation='tanh'
 			, kernel_regularizer=regularizers.l2(self.reg_const)
-			, name = 'value_head'
+			, name = 'value_head'+str(self.version_number)
 			)(x)
 
 
@@ -214,7 +215,7 @@ class Residual_CNN(Gen_Model):
 			, use_bias=False
 			, activation='linear'
 			, kernel_regularizer=regularizers.l2(self.reg_const)
-			, name = 'policy_head'
+			, name = 'policy_head'+str(self.version_number)
 			)(x)
 
 		return (x)
@@ -233,9 +234,9 @@ class Residual_CNN(Gen_Model):
 		ph = self.policy_head(x)
 
 		model = Model(inputs=[main_input], outputs=[vh, ph])
-		model.compile(loss={'value_head': 'mean_squared_error', 'policy_head': softmax_cross_entropy_with_logits},
+		model.compile(loss={'value_head'+str(self.version_number): 'mean_squared_error', 'policy_head'+str(self.version_number): softmax_cross_entropy_with_logits},
 			optimizer=SGD(lr=self.learning_rate, momentum = config.MOMENTUM),	
-			loss_weights={'value_head': 0.5, 'policy_head': 0.5}	
+			loss_weights={'value_head'+str(self.version_number): 0.5, 'policy_head'+str(self.version_number): 0.5}	
 			)
 
 		return model
