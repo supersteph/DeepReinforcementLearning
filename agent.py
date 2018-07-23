@@ -190,15 +190,16 @@ class Agent():
 			minibatch = random.sample(ltmemory, min(config.BATCH_SIZE, len(ltmemory)))
 
 			training_states = np.array([self.model.convertToModelInput(row['state']) for row in minibatch])
-			training_targets = {'value_head': np.array([row['value'] for row in minibatch])
-								, 'policy_head': np.array([row['AV'] for row in minibatch])} 
+			training_targets = {'value_head'+str(self.model.version_number): np.array([row['value'] for row in minibatch])
+								, 'policy_head'+str(self.model.version_number): np.array([row['AV'] for row in minibatch])} 
 
 			fit = self.model.fit(training_states, training_targets, epochs=config.EPOCHS, verbose=1, validation_split=0, batch_size = 32)
 			lg.logger_mcts.info('NEW LOSS %s', fit.history)
 
+
 			self.train_overall_loss.append(round(fit.history['loss'][config.EPOCHS - 1],4))
-			self.train_value_loss.append(round(fit.history['value_head_loss'][config.EPOCHS - 1],4)) 
-			self.train_policy_loss.append(round(fit.history['policy_head_loss'][config.EPOCHS - 1],4)) 
+			self.train_value_loss.append(round(fit.history['value_head'+str(self.model.version_number)+'_loss'][config.EPOCHS - 1],4)) 
+			self.train_policy_loss.append(round(fit.history['policy_head'+str(self.model.version_number)+'_loss'][config.EPOCHS - 1],4)) 
 
 		plt.plot(self.train_overall_loss, 'k')
 		plt.plot(self.train_value_loss, 'k:')
