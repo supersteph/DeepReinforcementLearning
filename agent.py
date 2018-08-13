@@ -106,7 +106,7 @@ class Agent():
 	def get_preds(self, state):
 		#predict the leaf
 		inputToModel = np.array([self.model.convertToModelInput(state)])
-
+		print(inputToModel)
 		preds = self.model.predict(inputToModel)
 		value_array = preds[0]
 		logits_array = preds[1]
