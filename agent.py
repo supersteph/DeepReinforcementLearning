@@ -107,7 +107,7 @@ class Agent():
 		#predict the leaf
 		inputToModel = np.array([self.model.convertToModelInput(state)])
 		print(inputToModel)
-		preds = self.model.predict(inputToModel)
+		preds = self.model.model.predict(inputToModel)
 		value_array = preds[0]
 		logits_array = preds[1]
 		value = value_array[0]
@@ -130,7 +130,7 @@ class Agent():
 	def evaluateLeaf(self, leaf, value, done, breadcrumbs):
 
 		lg.logger_mcts.info('------EVALUATING LEAF------')
-
+		
 		if done == 0:
 	
 			value, probs, allowedActions = self.get_preds(leaf.state)
@@ -193,7 +193,7 @@ class Agent():
 			training_targets = {'value_head'+str(self.model.version_number): np.array([row['value'] for row in minibatch])
 								, 'policy_head'+str(self.model.version_number): np.array([row['AV'] for row in minibatch])} 
 
-			fit = self.model.fit(training_states, training_targets, epochs=config.EPOCHS, verbose=1, validation_split=0, batch_size = 32)
+			fit = self.model.model.fit(training_states, training_targets, epochs=config.EPOCHS, verbose=1, validation_split=0, batch_size = 32)
 			lg.logger_mcts.info('NEW LOSS %s', fit.history)
 
 
