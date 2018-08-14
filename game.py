@@ -35,7 +35,7 @@ class Game:
 
 		currentAV = np.array(actionValues)
 
-		identities.append((GameState(currentBoard, state.playerTurn), currentAV))
+		identities.append((GameState(currentBoard, state.player), currentAV))
 
 		return identities
 
@@ -81,7 +81,7 @@ class GameState():
 
 	def _convertStateToId(self):
 
-		id = ''.join(map(str,self.binary[0]))
+		id = ''.join(map(str,self.binary))
 
 		return id
 
@@ -96,7 +96,7 @@ class GameState():
 		# This is the value of the state for the current player
 		# i.e. if the previous player played a winning move, you lose
 		for x,y,z in self.winners:
-			if (self.board[x] + self.board[y] + self.board[z] == 3 * -self.playerTurn):
+			if (self.board[x] + self.board[y] + self.board[z] == 3 * -self.player):
 				return (-1, -1, 1)
 		return (0, 0, 0)
 
@@ -110,9 +110,9 @@ class GameState():
 
 	def takeAction(self, action):
 		newBoard = np.array(self.board)
-		newBoard[action]=self.playerTurn
+		newBoard[action]=self.player
 		
-		newState = GameState(newBoard, -self.playerTurn)
+		newState = GameState(newBoard, -self.player)
 
 		value = 0
 		done = 0

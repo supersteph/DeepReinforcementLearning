@@ -11,7 +11,7 @@ from importlib import reload
 from game import Game, GameState
 from agent import Agent
 from memory import Memory
-from model import Residual_CNN
+from model import build_model
 from funcs import playMatches, playMatchesBetweenVersions
 
 import loggers as lg
@@ -45,8 +45,8 @@ else:
 ######## LOAD MODEL IF NECESSARY ########
 
 # create an untrained neural network objects from the config file
-current_NN = Residual_CNN(config.REG_CONST, config.LEARNING_RATE, (2,) + env.grid_shape,   env.action_size, config.HIDDEN_CNN_LAYERS,0)
-best_NN = Residual_CNN(config.REG_CONST, config.LEARNING_RATE, (2,) +  env.grid_shape,   env.action_size, config.HIDDEN_CNN_LAYERS,1)
+current_NN = build_model(config.REG_CONST, config.LEARNING_RATE, (2,) + env.grid_shape,   env.action_size, config.HIDDEN_CNN_LAYERS,0)
+best_NN = build_model(config.REG_CONST, config.LEARNING_RATE, (2,) +  env.grid_shape,   env.action_size, config.HIDDEN_CNN_LAYERS,1)
 
 #If loading an existing neural netwrok, set the weights from that model
 if initialise.INITIAL_MODEL_VERSION != None:
